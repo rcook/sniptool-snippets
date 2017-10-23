@@ -1,3 +1,3 @@
 Jinja2
+pyperclip
 pyprelude
-pypiwin32; sys.platform == "win32"

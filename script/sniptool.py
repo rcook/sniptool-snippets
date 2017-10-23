@@ -8,18 +8,12 @@ import argparse
 import jinja2
 import jinja2.meta
 import os
-import win32clipboard
-import win32con
+import pyperclip
 
 from pyprelude.file_system import make_path
 
 def _set_clipboard_text(s):
-    try:
-        win32clipboard.OpenClipboard()
-        win32clipboard.EmptyClipboard()
-        win32clipboard.SetClipboardData(win32con.CF_TEXT, str(s))
-    finally:
-        win32clipboard.CloseClipboard()
+    pyperclip.copy(s)
 
 def _has_prefix(s, prefix):
     return s[len(prefix) : ] if s.startswith(prefix) else None
@@ -79,7 +73,7 @@ def _do_gen(args):
     print(output)
     print("==========")
     _set_clipboard_text(output)
-    print("Text sent to Windows clipboard")
+    print("Text sent to clipboard")
 
 def _do_list(args):
     for p in os.listdir(args.template_dir):
