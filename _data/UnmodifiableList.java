@@ -13,7 +13,7 @@ final class {{class_name}}
     {
     }
 
-    public void addName(String {{item_singular}})
+    public void add{{item_singular | capitalize}}(String {{item_singular}})
     {
         _{{item_plural}}.add({{item_singular}});
     }

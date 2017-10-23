@@ -78,9 +78,10 @@ def _show_metadata(path, metadata, defaults, indent=0):
             print("{}  {}={}".format(prefix, key, value))
 
 def _do_gen(args):
-    filters = {
+    filters = jinja2.filters.FILTERS.copy()
+    filters.update({
         "encode_cpp_literal" : lambda s: "\"" + s.replace("\\", "\\\\") + "\"" # TODO: Implement full set of C++ literal encoding rules
-    }
+    })
     env = jinja2.Environment(undefined=jinja2.StrictUndefined)
     env.filters = filters
     path = make_path(args.template_dir, args.template_name)
