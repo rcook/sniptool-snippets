@@ -60,7 +60,11 @@ def _show_metadata(path, metadata, indent=0):
     print("{}Description: {}".format(prefix, metadata.get("description", "(no description)")))
 
 def _do_gen(args):
+    filters = {
+        "encode_cpp_literal" : lambda s: "\"" + s.replace("\\", "\\\\") + "\"" # TODO: Implement full set of C++ literal encoding rules
+    }
     env = jinja2.Environment(undefined=jinja2.StrictUndefined)
+    env.filters = filters
     path = make_path(args.template_dir, args.template_name)
     source = _read_source(path)
     metadata = _read_metadata(source)
