@@ -90,7 +90,7 @@ def _do_list(args):
         _show_metadata(path, metadata, 1)
         print()
 
-if __name__ == "__main__":
+def _main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--template-dir",
@@ -110,4 +110,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     args.func(args)
-    #_main(args)
+
+if __name__ == "__main__":
+    _main()
