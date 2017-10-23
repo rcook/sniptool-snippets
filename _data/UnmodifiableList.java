@@ -1,4 +1,4 @@
-{#- .name: Class exposing immutable list -#}
+{#- .name: Java class exposing immutable list -#}
 {#- .description: Uses unmodifiableList helper function to return unmodifiable view of an ArrayList -#}
 import java.util.ArrayList;
 import java.util.Collections;

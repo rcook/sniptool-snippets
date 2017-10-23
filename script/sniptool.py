@@ -8,8 +8,18 @@ import argparse
 import jinja2
 import jinja2.meta
 import os
+import win32clipboard
+import win32con
 
 from pyprelude.file_system import make_path
+
+def _set_clipboard_text(s):
+    try:
+        win32clipboard.OpenClipboard()
+        win32clipboard.EmptyClipboard()
+        win32clipboard.SetClipboardData(win32con.CF_TEXT, str(s))
+    finally:
+        win32clipboard.CloseClipboard()
 
 def _has_prefix(s, prefix):
     return s[len(prefix) : ] if s.startswith(prefix) else None
@@ -49,20 +59,55 @@ def _prompt(env, source):
 
     return values
 
-def _main(args):
+def _show_metadata(path, metadata, indent=0):
+    prefix = "  " * indent
+    print("{}Path: {}".format(prefix, path))
+    print("{}Name: {}".format(prefix, metadata.get("name", "(unnamed)")))
+    print("{}Description: {}".format(prefix, metadata.get("description", "(no description)")))
+
+def _do_gen(args):
     env = jinja2.Environment(undefined=jinja2.StrictUndefined)
+    path = make_path(args.template_dir, args.template_name)
+    source = _read_source(path)
+    metadata = _read_metadata(source)
+
+    print("Template: {}".format(args.template_name))
+    _show_metadata(path, metadata, 1)
+    values = _prompt(env, source)
+    output = env.from_string(source, values).render()
+    print("==========")
+    print(output)
+    print("==========")
+    _set_clipboard_text(output)
+    print("Text sent to Windows clipboard")
+
+def _do_list(args):
     for p in os.listdir(args.template_dir):
+        print("Template: {}".format(p))
         path = make_path(args.template_dir, p)
         source = _read_source(path)
         metadata = _read_metadata(source)
-        print("Path: {}".format(path))
-        print("Name: {}".format(metadata.get("name", "(unnamed)")))
-        print("Description: {}".format(metadata.get("description", "(no description)")))
-        values = _prompt(env, source)
-        print(env.from_string(source, values).render())
+        _show_metadata(path, metadata, 1)
+        print()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--template-dir", "-t", default=make_path(__name__, "..", "_data"))
+    parser.add_argument(
+        "--template-dir",
+        "-t",
+        default=make_path(__name__, "..", "_data"),
+        help="Template directory")
+    subparsers = parser.add_subparsers(help="subcommand help")
+
+    gen_parser = subparsers.add_parser("gen", help="Generate code snippet")
+    gen_parser.set_defaults(func=_do_gen)
+    gen_parser.add_argument(
+        "template_name",
+        help="Template name")
+
+    list_parser = subparsers.add_parser("list", help="List available templates")
+    list_parser.set_defaults(func=_do_list)
+
     args = parser.parse_args()
-    _main(args)
+    args.func(args)
+    #_main(args)
