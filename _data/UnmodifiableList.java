@@ -1,5 +1,8 @@
 {#- .name: Java class exposing immutable list -#}
 {#- .description: Uses unmodifiableList helper function to return unmodifiable view of an ArrayList -#}
+{#- .default(class_name): Container -#}
+{#- .default(item_plural): names -#}
+{#- .default(item_singular): name -#}
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

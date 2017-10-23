@@ -1,4 +1,5 @@
 {#- .name: Perform ad hoc logging to file -#}
+{#- .default(output_path): C:\logging.txt -#}
 #include <iostream>
 #include <fstream>
 #include <sstream>
