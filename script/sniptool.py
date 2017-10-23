@@ -5,6 +5,7 @@
 
 from __future__ import print_function
 import argparse
+import inflection
 import jinja2
 import jinja2.meta
 import os
@@ -80,7 +81,8 @@ def _show_metadata(path, metadata, defaults, indent=0):
 def _do_gen(args):
     filters = jinja2.filters.FILTERS.copy()
     filters.update({
-        "encode_cpp_literal" : lambda s: "\"" + s.replace("\\", "\\\\") + "\"" # TODO: Implement full set of C++ literal encoding rules
+        "encode_cpp_literal" : lambda s: "\"" + s.replace("\\", "\\\\") + "\"", # TODO: Implement full set of C++ literal encoding rules
+        "pluralize": inflection.pluralize
     })
     env = jinja2.Environment(undefined=jinja2.StrictUndefined)
     env.filters = filters

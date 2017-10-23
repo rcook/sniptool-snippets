@@ -1,3 +1,4 @@
+inflection
 Jinja2
 pyperclip
 pyprelude
