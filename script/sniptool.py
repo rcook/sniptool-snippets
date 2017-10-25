@@ -114,7 +114,7 @@ def _main():
     parser.add_argument(
         "--template-dir",
         "-t",
-        default=make_path(__name__, "..", "_data"),
+        default=make_path(__name__, "..", "_snippets"),
         help="Template directory")
     subparsers = parser.add_subparsers(help="subcommand help")
 
