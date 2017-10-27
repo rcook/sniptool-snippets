@@ -2,6 +2,7 @@
 /.Python
 /bin/
 /build/
+/dist/
 /Include/
 /include/
 /Lib/
