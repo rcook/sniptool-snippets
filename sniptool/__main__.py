@@ -10,6 +10,7 @@ import jinja2
 import jinja2.meta
 import os
 import pyperclip
+import sys
 
 from pyprelude.file_system import make_path
 
@@ -109,8 +110,11 @@ def _do_list(args):
         _show_metadata(path, metadata, defaults, 1)
         print()
 
-def _main():
-    parser = argparse.ArgumentParser()
+def _main(argv=None):
+    if argv is None:
+        argv = sys.argv[1:]
+
+    parser = argparse.ArgumentParser(prog="sniptool")
     parser.add_argument(
         "--template-dir",
         "-t",
@@ -127,7 +131,7 @@ def _main():
     list_parser = subparsers.add_parser("list", help="List available templates")
     list_parser.set_defaults(func=_do_list)
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     args.func(args)
 
 if __name__ == "__main__":
