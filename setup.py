@@ -29,7 +29,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "sniptool = sniptool.__main__:main"
+            "sniptool = sniptool.__main__:_main"
         ]
     },
     include_package_data=True,
