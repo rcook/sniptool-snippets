@@ -9,7 +9,7 @@ IFS=$'\n\t'
 script_dir=$(cd $(dirname $0); pwd -P)
 root_dir=$(dirname $script_dir)
 
-$script_dir/bootstrap $root_dir/sniptool/__main__.py $*
+$script_dir/run $root_dir/sniptool/__main__.py $*
 
 exit $?
 :CMDSCRIPT
@@ -22,5 +22,5 @@ exit /b %errorlevel%
 set x=%~f1
 set script_dir=%x:~0,-1%
 set root_dir=%~f2
-call "%script_dir%\bootstrap.cmd" "%root_dir%\sniptool\__main__.py" %args%
+call "%script_dir%\run.cmd" "%root_dir%\sniptool\__main__.py" %args%
 exit /b %errorlevel%

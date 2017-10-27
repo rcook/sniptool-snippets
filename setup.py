@@ -21,6 +21,12 @@ setup(
     author_email="rcook@rcook.org",
     license="MIT",
     packages=["sniptool"],
+    install_requires=[
+        "inflection",
+        "Jinja2",
+        "pyperclip",
+        "pyprelude"
+    ],
     entry_points={
         "console_scripts": [
             "sniptool = sniptool.__main__:main"
