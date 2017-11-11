@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.sun.jna.Platform;
+
 final class ProcessInfo
 {
     public ProcessInfo(int pid, int listeningPort)
@@ -23,8 +25,6 @@ final class ProcessInfo
 
 public final class {{class_name}}
 {
-    private static boolean s_isWindows = isWindows();
-
     private {{class_name}}()
     {
     }
@@ -36,12 +36,6 @@ public final class {{class_name}}
         {
             killProcess(pid);
         }
-    }
-
-    private static boolean isWindows()
-    {
-        final String os = System.getProperty("os.name").toLowerCase();
-        return os.indexOf("win") >= 0;
     }
 
     private static Integer getProcessByListeningPort(final int listeningPort)
@@ -74,7 +68,7 @@ public final class {{class_name}}
 
     private static String[] makeNetstatCommand()
     {
-        return s_isWindows ? makeNetstatCommandWindows() : makeNetstatCommandLinux();
+        return Platform.isWindows() ? makeNetstatCommandWindows() : makeNetstatCommandLinux();
     }
 
     private static String[] makeNetstatCommandWindows()
@@ -99,7 +93,7 @@ public final class {{class_name}}
 
     private static ProcessInfo parseNetstatProcessInfo(final String s)
     {
-        return s_isWindows ? parseNetstatProcessInfoWindows(s) : parseNetstatProcessInfoLinux(s);
+        return Platform.isWindows() ? parseNetstatProcessInfoWindows(s) : parseNetstatProcessInfoLinux(s);
     }
 
     private static ProcessInfo parseNetstatProcessInfoWindows(final String s)
@@ -185,7 +179,7 @@ public final class {{class_name}}
 
     private static String[] makeKillCommand(int pid)
     {
-        return s_isWindows ? makeKillCommandWindows(pid) : makeKillCommandLinux(pid);
+        return Platform.isWindows() ? makeKillCommandWindows(pid) : makeKillCommandLinux(pid);
     }
 
     private static String[] makeKillCommandWindows(int pid)
