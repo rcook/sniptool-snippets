@@ -1,6 +1,9 @@
 {#- .name: Java class demonstrating connecting to PostgreSQL database over JDBC -#}
 {#- .default(class_name): Main -#}
 {#- .default(item_name): name -#}
+{#- .default(package_path): org.mycompany -#}
+package {{package_path}};
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;

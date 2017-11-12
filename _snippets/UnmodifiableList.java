@@ -2,6 +2,9 @@
 {#- .description: Uses unmodifiableList helper function to return unmodifiable view of an ArrayList -#}
 {#- .default(class_name): Container -#}
 {#- .default(item_name): name -#}
+{#- .default(package_path): org.mycompany -#}
+package {{package_path}};
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
